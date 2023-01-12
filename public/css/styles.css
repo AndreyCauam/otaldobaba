@@ -72,6 +72,9 @@ a:hover {
     height: 40rem;
     max-width: 100%;
     margin: 5rem 0;
+}
+
+.scroll {
     overflow: scroll;
 }
 
@@ -233,7 +236,7 @@ table tr:nth-child(even) {
 }
 
 .alert {
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     color: white;
     text-align: center;
 }

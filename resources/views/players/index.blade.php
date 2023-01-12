@@ -6,6 +6,7 @@
 
 <div class="main-text">
     <div class="main-wrapper">
+        <div class="scroll">
         <table>
             <thead>
                 <tr>
@@ -34,6 +35,7 @@
 
             </tbody>
         </table>
+        </div>
     </div>
 </div>
 

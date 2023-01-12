@@ -8,7 +8,7 @@
     <div class="main-wrapper">
 
         @if($team1 && $team2 && $team3)
-
+        <div class="scroll">
         <table>
             <caption>Time 1</caption>
             <thead>
@@ -62,6 +62,7 @@
                 @endforeach
             </tbody>
         </table>
+        </div>
         @else
 
         <table>
@@ -101,7 +102,9 @@
         </table>
 
 
+
         @endif
+
 
     </div>
 </div>

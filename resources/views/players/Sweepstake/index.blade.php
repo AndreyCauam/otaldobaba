@@ -12,6 +12,7 @@
 @endif
 <div class="main-text">
     <div class="main-wrapper">
+        <div class="scroll">
         <form enctype="multipart/form-data" method="POST" action="{{route('sweepstake.start')}}">
         @csrf
         <table>
@@ -48,6 +49,7 @@
         </div>
         <button type="submit" class="sorteio">Sortear</button>
         </form>
+        </div>
     </div>
 </div>
 
