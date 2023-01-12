@@ -4,6 +4,12 @@
 
 @section('content')
 
+
+@if($errors->any())
+    <div class="alert">
+        <p>{{$errors->first()}}</p>
+    </div>
+@endif
 <div class="main-text">
     <div class="main-wrapper">
         <form enctype="multipart/form-data" method="POST" action="{{route('sweepstake.start')}}">

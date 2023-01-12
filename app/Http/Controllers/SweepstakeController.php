@@ -23,8 +23,16 @@ class SweepstakeController extends Controller
     {
 
         $ids = $request->users;
-        $amountPlayersPerTeam = $request->amountPlayers;
+        $amountPlayersPerTeam = intval($request->amountPlayers);
         $numberOfPlayers = count($ids);
+
+        $isInt = $numberOfPlayers / $amountPlayersPerTeam;
+
+        if (floor($isInt) != $isInt) {
+            return redirect()->route('sweepstake.index')->withErrors(['msg' => 'Você deve colocar um número de jogadores iguais por time']);
+        }
+
+
 
         $high = [];
         $middle = [];
@@ -196,6 +204,6 @@ class SweepstakeController extends Controller
         }
 
 
-        return view('players.Sweepstake.show', ['team1' => $team1, 'team2' => $team2, 'team3' => $team3, 'team4' => $team4]);
+        return view('players.Sweepstake.show', ['team1' => $team1, 'team2' => $team2, 'team3' => $team3]);
     }
 }
