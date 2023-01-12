@@ -30,6 +30,10 @@ class SweepstakeController extends Controller
         $middle = [];
         $low = [];
 
+        $team1 = [];
+        $team2 = [];
+        $team3 = [];
+
         foreach ($ids as $id) {
             $player = Player::find($id);
 
@@ -43,8 +47,7 @@ class SweepstakeController extends Controller
         }
 
         if ($numberOfPlayers / $amountPlayersPerTeam == '2') {
-            $team1 = [];
-            $team2 = [];
+
 
             for ($i = 0; $i <= count($high); $i++) {
                 shuffle($high);
@@ -101,23 +104,98 @@ class SweepstakeController extends Controller
                     array_push($team1, array_shift($low));
                 }
             }
-
-
-
-
-            // -----------------
         } elseif ($numberOfPlayers / $amountPlayersPerTeam == '3') {
-            $team1 = [];
-            $team2 = [];
-            $team3 = [];
-        } elseif ($numberOfPlayers / $amountPlayersPerTeam == '4') {
-            $team1 = [];
-            $team2 = [];
-            $team3 = [];
-            $team4 = [];
+
+
+            for ($i = 0; $i <= count($high); $i++) {
+                shuffle($high);
+
+                if (count($team1) == $amountPlayersPerTeam && count($team2) == $amountPlayersPerTeam && count($team3) == $amountPlayersPerTeam) {
+                    break;
+                } elseif (count($team1) < $amountPlayersPerTeam && count($team2) < $amountPlayersPerTeam && count($team3) < $amountPlayersPerTeam) {
+                    if (count($high) >= 3) {
+                        array_push($team1, array_shift($high));
+                        array_push($team2, array_shift($high));
+                        array_push($team3, array_shift($high));
+                    } elseif (count($high) == 2) {
+                        array_push($team1, array_shift($high));
+                        array_push($team2, array_shift($high));
+                    } else {
+                        array_push($team1, array_shift($high));
+                    }
+                } elseif (count($team1) == $amountPlayersPerTeam && count($team2) < $amountPlayersPerTeam && count($team3) < $amountPlayersPerTeam) {
+                    array_push($team2, array_shift($high));
+                    array_push($team3, array_shift($high));
+                } elseif ((count($team1) == $amountPlayersPerTeam && count($team2) == $amountPlayersPerTeam && count($team3) < $amountPlayersPerTeam)) {
+                    array_push($team3, array_shift($high));
+                } else {
+                    array_push($team1, array_shift($high));
+                }
+            }
+
+            for ($i = 0; $i <= count($middle); $i++) {
+                shuffle($middle);
+                if (count($team1) == $amountPlayersPerTeam && count($team2) == $amountPlayersPerTeam && count($team3) == $amountPlayersPerTeam) {
+                    break;
+                } elseif (count($team1) < $amountPlayersPerTeam && count($team2) < $amountPlayersPerTeam && count($team3) < $amountPlayersPerTeam) {
+                    if (count($middle) >= 3) {
+                        array_push($team1, array_shift($middle));
+                        array_push($team2, array_shift($middle));
+                        array_push($team3, array_shift($middle));
+                    } elseif (count($middle) == 2) {
+                        array_push($team1, array_shift($middle));
+                        array_push($team2, array_shift($middle));
+                    } else {
+                        array_push($team1, array_shift($middle));
+                    }
+                } elseif (count($team1) == $amountPlayersPerTeam && count($team2) < $amountPlayersPerTeam && count($team3) < $amountPlayersPerTeam) {
+                    array_push($team2, array_shift($middle));
+                    array_push($team3, array_shift($middle));
+                } elseif ((count($team1) == $amountPlayersPerTeam && count($team2) == $amountPlayersPerTeam && count($team3) < $amountPlayersPerTeam)) {
+                    array_push($team3, array_shift($middle));
+                } else {
+                    array_push($team1, array_shift($middle));
+                }
+            }
+
+            for ($i = 0; $i <= count($low); $i++) {
+                shuffle($low);
+
+                if (count($team1) == $amountPlayersPerTeam && count($team2) == $amountPlayersPerTeam && count($team3) == $amountPlayersPerTeam) {
+                    break;
+                } elseif (count($team1) < $amountPlayersPerTeam && count($team2) < $amountPlayersPerTeam && count($team3) < $amountPlayersPerTeam) {
+                    if (count($low) >= 3) {
+                        array_push($team1, array_shift($low));
+                        array_push($team2, array_shift($low));
+                        array_push($team3, array_shift($low));
+                    } elseif (count($low) == 2) {
+                        array_push($team1, array_shift($low));
+                        array_push($team2, array_shift($low));
+                    } else {
+                        array_push($team1, array_shift($low));
+                    }
+                } elseif (count($team1) == $amountPlayersPerTeam && count($team2) < $amountPlayersPerTeam && count($team3) < $amountPlayersPerTeam) {
+                    if (count($low) >= 2) {
+                        array_push($team2, array_shift($low));
+                        array_push($team3, array_shift($low));
+                    } else {
+                        array_push($team3, array_shift($low));
+                    }
+                } elseif ((count($team1) == $amountPlayersPerTeam && count($team2) == $amountPlayersPerTeam && count($team3) < $amountPlayersPerTeam)) {
+
+                    if (count($team3) <= 3) {
+                        array_push($team3, array_shift($low));
+                        array_push($team3, array_shift($low));
+                    } else {
+                        array_push($team3, array_shift($low));
+                    }
+                } else {
+                    array_push($team1, array_shift($low));
+                }
+            }
         }
 
 
-        return view('players.Sweepstake.show');
+        return view('players.Sweepstake.show', ['team1' => $team1, 'team2' => $team2, 'team3' => $team3, 'team4' => $team4]);
     }
 }

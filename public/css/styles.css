@@ -61,18 +61,19 @@ a:hover {
 
     text-align: center;
     justify-content: center;
-}
-
-.main-text .main-wrapper {
-    display: flex;
-    flex-direction: column;
-
-    align-items: center;
-    justify-content: center;
+    width: 100vw;
+    height: 50rem;
+    margin: 0 auto;
 }
 
 .main-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     height: 50rem;
+    max-width: 100%;
+    margin: 10rem 0;
+    overflow: scroll;
 }
 
 .form-content {
@@ -180,8 +181,8 @@ button:hover {
 }
 
 table {
-    width: 75rem;
     border-collapse: collapse;
+    width: 50rem;
 }
 
 table th {
@@ -209,8 +210,10 @@ table td {
 
     padding-top: 0.7rem;
     padding-bottom: 0.6rem;
+}
 
-    border-bottom: 1px solid var(--footer-color);
+table tr:nth-child(even) {
+    background: lightgray;
 }
 
 .edit {
