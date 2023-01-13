@@ -28,6 +28,7 @@ class SweepstakeController extends Controller
 
         $isInt = $numberOfPlayers / $amountPlayersPerTeam;
 
+
         if (floor($isInt) != $isInt) {
             return redirect()->route('sweepstake.index')->withErrors(['msg' => 'Você deve colocar um número de jogadores iguais por time']);
         }
@@ -54,7 +55,9 @@ class SweepstakeController extends Controller
             }
         }
 
-        if ($numberOfPlayers / $amountPlayersPerTeam == '2') {
+
+
+        if ($numberOfPlayers / $amountPlayersPerTeam == 2) {
 
 
             for ($i = 0; $i <= count($high); $i++) {
@@ -78,17 +81,31 @@ class SweepstakeController extends Controller
 
             for ($i = 0; $i <= count($middle); $i++) {
                 shuffle($middle);
+
                 if (count($team1) == $amountPlayersPerTeam && count($team2) == $amountPlayersPerTeam) {
                     break;
                 } elseif (count($team1) < $amountPlayersPerTeam && count($team2) < $amountPlayersPerTeam) {
-                    if (count($middle) >= 2) {
+                    if (count($middle) >= 3) {
+                        array_push($team1, array_shift($middle));
+                        array_push($team2, array_shift($middle));
+                        array_push($team1, array_shift($middle));
+                    } elseif (count($middle) == 2) {
                         array_push($team1, array_shift($middle));
                         array_push($team2, array_shift($middle));
                     } else {
-                        array_push($team1, array_shift($middle));
+                        array_push($team2, array_shift($middle));
                     }
                 } elseif (count($team1) == $amountPlayersPerTeam && count($team2) < $amountPlayersPerTeam) {
-                    array_push($team2, array_shift($middle));
+                    if (count($middle) >= 3) {
+                        array_push($team2, array_shift($middle));
+                        array_push($team2, array_shift($middle));
+                        array_push($team2, array_shift($middle));
+                    } elseif (count($middle) == 2) {
+                        array_push($team2, array_shift($middle));
+                        array_push($team2, array_shift($middle));
+                    } else {
+                        array_push($team2, array_shift($middle));
+                    }
                 } else {
                     array_push($team1, array_shift($middle));
                 }
@@ -107,12 +124,18 @@ class SweepstakeController extends Controller
                         array_push($team1, array_shift($low));
                     }
                 } elseif (count($team1) == $amountPlayersPerTeam && count($team2) < $amountPlayersPerTeam) {
-                    array_push($team2, array_shift($low));
+
+                    if (count($low) >= 2) {
+                        array_push($team2, array_shift($low));
+                        array_push($team2, array_shift($low));
+                    } else {
+                        array_push($team2, array_shift($low));
+                    }
                 } else {
                     array_push($team1, array_shift($low));
                 }
             }
-        } elseif ($numberOfPlayers / $amountPlayersPerTeam == '3') {
+        } elseif ($numberOfPlayers / $amountPlayersPerTeam == 3) {
 
 
             for ($i = 0; $i <= count($high); $i++) {
@@ -146,7 +169,13 @@ class SweepstakeController extends Controller
                 if (count($team1) == $amountPlayersPerTeam && count($team2) == $amountPlayersPerTeam && count($team3) == $amountPlayersPerTeam) {
                     break;
                 } elseif (count($team1) < $amountPlayersPerTeam && count($team2) < $amountPlayersPerTeam && count($team3) < $amountPlayersPerTeam) {
-                    if (count($middle) >= 3) {
+
+                    if (count($middle) >= 4) {
+                        array_push($team1, array_shift($middle));
+                        array_push($team2, array_shift($middle));
+                        array_push($team3, array_shift($middle));
+                        array_push($team1, array_shift($middle));
+                    } elseif (count($middle) == 3) {
                         array_push($team1, array_shift($middle));
                         array_push($team2, array_shift($middle));
                         array_push($team3, array_shift($middle));
@@ -183,15 +212,20 @@ class SweepstakeController extends Controller
                         array_push($team1, array_shift($low));
                     }
                 } elseif (count($team1) == $amountPlayersPerTeam && count($team2) < $amountPlayersPerTeam && count($team3) < $amountPlayersPerTeam) {
-                    if (count($low) >= 2) {
+
+                    if (count($low) <= 3) {
                         array_push($team2, array_shift($low));
+                        array_push($team3, array_shift($low));
+                        array_push($team3, array_shift($low));
+                    } elseif (count($low) == 2) {
+                        array_push($team3, array_shift($low));
                         array_push($team3, array_shift($low));
                     } else {
                         array_push($team3, array_shift($low));
                     }
                 } elseif ((count($team1) == $amountPlayersPerTeam && count($team2) == $amountPlayersPerTeam && count($team3) < $amountPlayersPerTeam)) {
 
-                    if (count($team3) <= 3) {
+                    if (count($low) <= 3) {
                         array_push($team3, array_shift($low));
                         array_push($team3, array_shift($low));
                     } else {
@@ -202,6 +236,8 @@ class SweepstakeController extends Controller
                 }
             }
         }
+
+
 
 
         return view('players.Sweepstake.show', ['team1' => $team1, 'team2' => $team2, 'team3' => $team3]);
